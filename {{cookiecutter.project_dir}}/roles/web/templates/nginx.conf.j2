@@ -1,4 +1,4 @@
-# {{ ansible_managed }}
+{% raw %}# {{ ansible_managed }}
 {% set media_absolute = django_media_url|truncate(4, True, "") == "http" %}
 {% set static_absolute = django_static_url|truncate(4, True, "") == "http" %}
 
@@ -51,4 +51,4 @@ server {
 	expires 1M;
 	access_log off;
 	add_header Cache-Control "public";
-}{% endif %}
+}{% endif %}{% endraw %}
