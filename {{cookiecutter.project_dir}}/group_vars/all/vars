@@ -1,0 +1,20 @@
+---
+project_slug: {{cookiecutter.project_slug}}
+app_dir: {{cookiecutter.app_dir}}
+db_name: {{cookiecutter.project_slug}}
+db_user: {{cookiecutter.project_slug}}
+db_host: 127.0.0.1
+db_port: 5432
+django_allowed_host:
+  - {{cookiecutter.l3_domain}}
+django_server_email: admin@tag.sk
+django_settings_module: config.settings.production
+# if URL is absolute
+django_static_url: /static/
+django_media_url: /media/
+l2_domain: {{cookiecutter.l2_domain}}
+l3_domain: {{cookiecutter.l3_domain}}
+socket_path: /var/run/
+socket_file: {{cookiecutter.project_slug}}.socket
+
+# vim:ft=ansible:

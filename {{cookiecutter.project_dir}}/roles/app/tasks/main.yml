@@ -1,0 +1,65 @@
+---
+- name: clone or update from git repository
+  git:
+    repo: "git@github.com:tag-design/{{"{{ project_slug }}"}}.git"
+    dest: "{{"{{ app_dir }}"}}"
+
+- name: pip install python packages to virtual environment
+  pip:
+    requirements: "{{"{{ app_dir }}"}}requirements.txt"
+    virtualenv: "{{"{{ app_dir }}"}}venv/"
+    virtualenv_python: /usr/bin/python3
+
+- name: create new "postactivate" file in virtual environment
+  template:
+    src: postactivate.j2
+    dest: "{{"{{ app_dir }}"}}venv/bin/postactivate"
+    mode: 0644
+
+- name: create .env config
+  template:
+    src: env.j2
+    dest: "{{"{{ app_dir }}"}}.env"
+    mode: 0644
+
+- name: install systemd socket unit file
+  template:
+    src: systemd.socket.j2
+    dest: "{{"{{ app_dir }}"}}{{"{{ project_slug }}"}}.socket"
+    mode: 0644
+
+- name: create symlink to socket unit file
+  file:
+    src: "{{"{{ app_dir }}"}}{{"{{ project_slug }}"}}.socket"
+    dest: /etc/systemd/system/{{"{{ project_slug }}"}}.socket
+    state: link
+  become: true
+  become_user: root
+
+- name: install systemd service unit file
+  template:
+    src: systemd.service.j2
+    dest: "{{"{{ app_dir }}"}}{{"{{ project_slug }}"}}.service"
+    mode: 0644
+
+- name: create symlink to service unit file
+  file:
+    src: "{{"{{ app_dir }}"}}{{"{{ project_slug }}"}}.service"
+    dest: /etc/systemd/system/{{"{{ project_slug }}"}}.service
+    state: link
+  become: true
+  become_user: root
+
+- name: start app service
+  systemd: state=started name={{"{{ project_slug }}"}}.service daemon_reload=yes
+  become: true
+  become_user: root
+
+- name: install monit config
+  template:
+    src: monit.j2
+    dest: /etc/monit/conf.d/{{"{{ project_slug }}"}}
+    mode: 0644
+  become: true
+  become_user: root
+  notify: reload monit

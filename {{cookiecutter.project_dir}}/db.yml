@@ -1,0 +1,8 @@
+---
+# file: db.yml
+- hosts: db
+  become: true
+  roles:
+    - db
+
+# vim:ft=ansible:

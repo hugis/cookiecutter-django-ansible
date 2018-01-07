@@ -1,0 +1,8 @@
+[app]
+{{ cookiecutter.app_server }}
+
+[db]
+{{ cookiecutter.db_server }}
+
+[web]
+{{ cookiecutter.web_server }}

@@ -1,0 +1,23 @@
+---
+- name: install postgresql python tools
+  apt: name={{"{{ item }}"}} state=present update_cache=yes
+  with_items:
+    - libpq-dev
+    - python-psycopg2
+
+- name: ensure postgresql started
+  service: name=postgresql state=started enabled=yes
+
+- name: create postgresql user
+  postgresql_user:
+    name: "{{"{{ db_user }}"}}"
+    password: "{{"{{ db_password }}"}}"
+  become: true
+  become_user: postgres
+
+- name: create database
+  postgresql_db:
+    name: "{{"{{ db_name }}"}}"
+    owner: "{{"{{ db_user }}"}}"
+  become: true
+  become_user: postgres

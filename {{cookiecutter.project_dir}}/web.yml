@@ -1,0 +1,8 @@
+---
+# file: web.yml
+- hosts: web
+  become: true
+  roles:
+    - web
+
+# vim:ft=ansible:

@@ -1,0 +1,7 @@
+---
+# set values and encrypt with command:
+#   ansible-vault encrypt group_vars/all/vault
+db_password: DB_PASSWORD
+django_secret_key: SECRET_KEY
+
+# vim:ft=ansible:
