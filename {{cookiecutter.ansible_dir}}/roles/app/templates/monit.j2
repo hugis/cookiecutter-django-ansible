@@ -1,0 +1,11 @@
+{% raw %}# {{ ansible_managed }}
+check process {{ project_slug }} with pidfile {{ app_dir }}pid{% endraw %}
+{% if cookiecutter.use_celery == "y" %}{% raw %}
+check process {{ project_slug }}_celeryworker with pidfile {{ app_dir }}celeryworker.pid
+    start program = "/bin/systemctl start {{ project_slug }}_celeryworker.service" with timeout 60 seconds
+    stop program  = "/bin/systemctl stop {{ project_slug }}_celeryworker.service"
+
+check process {{ project_slug }}_celerybeat with pidfile {{ app_dir }}celerybeat.pid
+    start program = "/bin/systemctl start {{ project_slug }}_celerybeat.service" with timeout 60 seconds
+    stop program  = "/bin/systemctl stop {{ project_slug }}_celerybeat.service"
+{% endraw %}{% endif %}

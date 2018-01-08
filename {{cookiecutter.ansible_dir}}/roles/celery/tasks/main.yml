@@ -1,0 +1,44 @@
+{% raw %}---
+- name: add vhost to rabbitmq
+  rabbitmq_vhost:
+    name: "{{ celery_broker_vhost }}"
+    state: present
+
+- name: add user to rabbitmq
+  rabbitmq_user:
+    user: "{{ celery_broker_user }}"
+    password: "{{ celery_broker_password }}"
+    vhost: "{{ celery_broker_vhost }}"
+    configure_priv: .*
+    read_priv: .*
+    write_priv: .*
+    state: present
+
+- name: install systemd celerybeat service unit file
+  template:
+    src: celerybeat.service.j2
+    dest: "{{ app_dir }}{{ project_slug }}_celerybeat.service"
+    mode: 0644
+  become: true
+  become_user: webmanager
+
+- name: create symlink to celerybeat service unit file
+  file:
+    src: "{{ app_dir }}{{ project_slug }}_celerybeat.service"
+    dest: /etc/systemd/system/{{ project_slug }}_celerybeat.service
+    state: link
+
+
+- name: install systemd celeryworker service unit file
+  template:
+    src: celeryworker.service.j2
+    dest: "{{ app_dir }}{{ project_slug }}_celeryworker.service"
+    mode: 0644
+  become: true
+  become_user: webmanager
+
+- name: create symlink to celeryworker service unit file
+  file:
+    src: "{{ app_dir }}{{ project_slug }}_celeryworker.service"
+    dest: /etc/systemd/system/{{ project_slug }}_celeryworker.service
+    state: link{% endraw %}

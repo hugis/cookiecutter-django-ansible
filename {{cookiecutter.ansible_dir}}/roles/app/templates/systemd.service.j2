@@ -1,7 +1,7 @@
-{% raw %}[Unit]
-Description={{ l3_domain }} app daemon
-After=network.target postgresql.service
-Requires=postgresql.service {{ socket_file }}
+[Unit]
+Description={{"{{ l3_domain }}"}} app daemon
+After=network.target postgresql.service{% if cookiecutter.use_celery == "y" %} rabbitmq-server.service{% endif %}
+{% raw %}Requires=postgresql.service {{ socket_file }}
 Conflicts=shutdown.target reboot.target halt.target
 
 [Service]

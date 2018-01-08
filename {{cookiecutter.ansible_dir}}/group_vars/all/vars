@@ -9,12 +9,16 @@ django_allowed_host:
   - {{cookiecutter.l3_domain}}
 django_server_email: admin@tag.sk
 django_settings_module: config.settings.production
-# if URL is absolute
+# if URL is absolute set domain in web vars
 django_static_url: /static/
+# if URL is absolute set domain in web vars
 django_media_url: /media/
 l2_domain: {{cookiecutter.l2_domain}}
 l3_domain: {{cookiecutter.l3_domain}}
 socket_path: /var/run/
 socket_file: {{cookiecutter.project_slug}}.socket
-
-# vim:ft=ansible:
+{% if cookiecutter.use_celery == "y" %}
+celery_broker_user: {{cookiecutter.project_slug}}_www
+celery_broker_host: localhost
+celery_broker_vhost: /{{cookiecutter.project_slug}}/www
+{% endif %}

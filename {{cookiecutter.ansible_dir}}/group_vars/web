@@ -2,5 +2,3 @@
 web_listen_ip: 212.57.35.21
 web_static_domain: ""
 web_media_domain: ""
-
-# vim:ft=ansible:

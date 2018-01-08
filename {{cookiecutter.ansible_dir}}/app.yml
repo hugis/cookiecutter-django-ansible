@@ -5,5 +5,3 @@
   become_user: webmanager
   roles:
     - app
-
-# vim:ft=ansible:

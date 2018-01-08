@@ -1,11 +1,13 @@
 {
-	"project_dir": "ansible",
-	"project_slug": "project slug",
-	"app_dir": "/opt/webapps/{{cookiecutter.project_slug}}/",
-	"web_server": "",
-	"app_server": "{{cookiecutter.web_server}}",
-	"db_server": "{{cookiecutter.web_server}}",
-	"remote_user": "webmanager",
-	"l2_domain": "{{cookiecutter.project_slug}}.sk",
-	"l3_domain": "www.{{cookiecutter.l2_domain}}"
+  "project_slug": "project slug",
+  "ansible_dir": "ansible",
+  "app_dir": "/opt/webapps/{{cookiecutter.project_slug}}/",
+  "web_server": "",
+  "app_server": "{{cookiecutter.web_server}}",
+  "celery_server": "{{cookiecutter.web_server}}",
+  "db_server": "{{cookiecutter.web_server}}",
+  "remote_user": "webmanager",
+  "l2_domain": "{{cookiecutter.project_slug}}.sk",
+  "l3_domain": "www.{{cookiecutter.l2_domain}}",
+  "use_celery": "n"
 }

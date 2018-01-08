@@ -1,0 +1,3 @@
+---
+celery_task_app: {{cookiecutter.project_slug}}.taskapp
+celery_worker_concurency: 2

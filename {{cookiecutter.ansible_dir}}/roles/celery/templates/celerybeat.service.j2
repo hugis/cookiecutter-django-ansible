@@ -1,0 +1,27 @@
+{% raw %}[Unit]
+Description={{ l3_domain }} celery beat daemon
+After=network.target postgresql.service rabbitmq-server.service
+Requires=postgresql.service rabbitmq-server.service
+Conflicts=shutdown.target reboot.target halt.target
+
+[Service]
+PIDFile={{ app_dir }}celerybeat.pid
+User=webmanager
+Group=webmanager
+WorkingDirectory={{ app_dir }}
+EnvironmentFile={{ app_dir }}.env
+Nice=5
+TimeoutSec=600
+Restart=on-failure
+
+ExecStart={{ app_dir }}venv/bin/python {{ app_dir }}/venv/bin/celery beat \
+        -A {{ celery_task_app }} \
+        -S django_celery_beat.schedulers:DatabaseScheduler \
+        --schedule {{ app_dir }}celerybeat.beat \
+        --pidfile={{ app_dir }}celerybeat.pid \
+        --logfile={{ app_dir }}log/celeryd.log \
+        --loglevel=INFO
+ExecStop=/bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=multi-user.target{% endraw %}

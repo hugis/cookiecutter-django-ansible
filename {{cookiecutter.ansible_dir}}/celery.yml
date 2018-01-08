@@ -1,0 +1,6 @@
+---
+# file: celery.yml
+- hosts: celery
+  become: true
+  roles:
+    - celery

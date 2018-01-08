@@ -3,8 +3,7 @@
 - hosts: all
   gather_facts: false
 
-- include: app.yml
+- include: app.yml{% if cookiecutter.use_celery == "y" %}
+- include: celery.yml{% endif %}
 - include: db.yml
 - include: web.yml
-
-# vim:ft=ansible:

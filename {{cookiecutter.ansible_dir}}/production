@@ -1,6 +1,9 @@
 [app]
 {{ cookiecutter.app_server }}
 
+[celery]
+{{ cookiecutter.celery_server }}
+
 [db]
 {{ cookiecutter.db_server }}
 

@@ -1,0 +1,35 @@
+{% raw %}[Unit]
+Description={{ l3_domain }} celery worker daemon
+After=network.target postgresql.service rabbitmq-server.service
+Requires=postgresql.service rabbitmq-server.service
+Conflicts=shutdown.target reboot.target halt.target
+
+[Service]
+Type=forking
+PIDFile={{ app_dir }}celeryworker.pid
+User=webmanager
+Group=webmanager
+WorkingDirectory={{ app_dir }}
+EnvironmentFile={{ app_dir }}.env
+Nice=5
+TimeoutSec=600
+Restart=on-failure
+
+ExecStart={{ app_dir }}venv/bin/python {{ app_dir }}venv/bin/celery multi start {{ project_slug }}w1 \
+        -A {{ celery_task_app }} \
+        --concurrency={{ celery_worker_concurency }} \
+        --pidfile={{ app_dir }}celeryworker.pid \
+        --logfile={{ app_dir }}log/celeryd.log \
+        --loglevel=INFO
+ExecStop={{ app_dir }}venv/bin/python {{ app_dir }}venv/bin/celery multi stopwait {{ project_slug }}w1 \
+        --pidfile={{ app_dir }}celeryworker.pid
+ExecReload={{ app_dir }}venv/bin/python {{ app_dir }}venv/bin/celery multi restart {{ project_slug }}w1 \
+        -A {{ celery_task_app }} \
+        --concurrency=2 \
+        --pidfile={{ app_dir }}celeryworker.pid \
+        --logfile={{ app_dir }}log/celeryd.log \
+        --loglevel=INFO
+
+
+[Install]
+WantedBy=multi-user.target{% endraw %}
