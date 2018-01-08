@@ -21,4 +21,5 @@ socket_file: {{cookiecutter.project_slug}}.socket
 celery_broker_user: {{cookiecutter.project_slug}}_www
 celery_broker_host: localhost
 celery_broker_vhost: /{{cookiecutter.project_slug}}/www
-{% endif %}
+{% endif %}{% if cookiecutter.use_mailgun %}{% if cookiecutter.use_mailgun_api %}
+mailgun_sender_domain: mg.{{cookiecutter.l2_domain}}{% endif %}{% endif %}

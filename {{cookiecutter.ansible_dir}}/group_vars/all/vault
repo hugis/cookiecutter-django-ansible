@@ -3,6 +3,14 @@
 #   ansible-vault encrypt group_vars/all/vault
 
 db_password: DB_PASSWORD
-django_secret_key: SECRET_KEY
-{% if cookiecutter.use_celery == "y" %}
-celery_broker_password: BROKER_PASSWORD{% endif %}
+django_secret_key: SECRET_KEY{% if cookiecutter.use_celery == "y" %}
+
+celery_broker_password: BROKER_PASSWORD{% endif %}{% if cookiecutter.use_sentry == "y" %}
+
+sentry_public_key: public_key
+sentry_secret_key: secret_key
+sentry_project_id: 123{% endif %}{% if cookiecutter.use_mailgun %}{% if cookiecutter.use_mailgun_api %}
+
+mailgun_api_key: key-123{% else %}
+
+django_email_host_password: EMAIL_HOST_PASSWORD{% endif %}{% endif %}

@@ -9,5 +9,8 @@
   "remote_user": "webmanager",
   "l2_domain": "{{cookiecutter.project_slug}}.sk",
   "l3_domain": "www.{{cookiecutter.l2_domain}}",
+  "use_sentry": "y",
+  "use_mailgun": "y",
+  "use_mailgun_api": "n",
   "use_celery": "n"
 }
