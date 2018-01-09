@@ -7,7 +7,7 @@ db_host: 127.0.0.1
 db_port: 5432
 django_allowed_host:
   - {{cookiecutter.l3_domain}}
-django_server_email: admin@tag.sk
+django_server_email: postmaster@{% if cookiecutter.use_mailgun == "y" %}mg.{% endif %}{{cookiecutter.l2_domain}}
 django_settings_module: config.settings.production
 # if URL is absolute set domain in web vars
 django_static_url: /static/
@@ -21,5 +21,6 @@ socket_file: {{cookiecutter.project_slug}}.socket
 celery_broker_user: {{cookiecutter.project_slug}}_www
 celery_broker_host: localhost
 celery_broker_vhost: /{{cookiecutter.project_slug}}/www
-{% endif %}{% if cookiecutter.use_mailgun %}{% if cookiecutter.use_mailgun_api %}
-mailgun_sender_domain: mg.{{cookiecutter.l2_domain}}{% endif %}{% endif %}
+{% endif %}{% if cookiecutter.use_mailgun == "y" %}{% if cookiecutter.use_mailgun_api == "y" %}
+mailgun_sender_domain: mg.{{cookiecutter.l2_domain}}{% else %}
+django_email_host_user: postmaster@mg.{{cookiecutter.l2_domain}}{% endif %}{% endif %}

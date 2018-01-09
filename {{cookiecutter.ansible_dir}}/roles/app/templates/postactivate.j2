@@ -13,12 +13,12 @@ export DJANGO_STATIC_URL="{{ django_static_url }}"{% endraw %}{% if cookiecutter
 export CELERY_BROKER_URL="amqp://{{ celery_broker_user }}:{{ celery_broker_password }}@{{ celery_broker_host }}/{{ celery_broker_vhost }}"{% endraw %}{% endif %}{% if cookiecutter.use_sentry == "y" %}{% raw %}
 
 # Sentry
-export DJANGO_SENTRY_DSN="https://{{ sentry_public_key }}:{{ sentry_secret_key }}@sentry.io/{{ sentry_project_id }}"{% endraw %}{% endif %}{% if cookiecutter.use_mailgun %}{% if cookiecutter.use_mailgun_api %}{% raw %}
+export DJANGO_SENTRY_DSN="https://{{ sentry_public_key }}:{{ sentry_secret_key }}@sentry.io/{{ sentry_project_id }}"{% endraw %}{% endif %}{% if cookiecutter.use_mailgun == "y" %}{% if cookiecutter.use_mailgun_api == "y" %}{% raw %}
 
 # Django-anymail
 export MAILGUN_API_KEY="{{ mailgun_api_key }}"
 export MAILGUN_SENDER_DOMAIN="{{ mailgun_sender_domain }}"{% endraw %}{% else %}{% raw %}
 
 # Mailgun
-export DJANGO_EMAIL_HOST_USER="{{ django.server_email }}"
+export DJANGO_EMAIL_HOST_USER="{{ django_server_email }}"
 export DJANGO_EMAIL_HOST_PASSWORD="{{ django_email_host_password }}"{% endraw %}{% endif %}{% endif %}
