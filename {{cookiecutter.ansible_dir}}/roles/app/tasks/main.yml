@@ -1,7 +1,7 @@
 ---
 - name: clone or update from git repository
   git:
-    repo: "git@github.com:tag-design/{{"{{ project_slug }}"}}.git"
+    repo: "git@github.com:{{"{{ github_repo }}"}}.git"
     dest: "{{"{{ app_dir }}"}}"
 
 - name: pip install python packages to virtual environment
