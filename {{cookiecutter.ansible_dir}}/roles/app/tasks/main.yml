@@ -7,13 +7,13 @@
 - name: pip install python packages to virtual environment
   pip:
     requirements: "{{"{{ app_dir }}"}}requirements.txt"
-    virtualenv: "{{"{{ app_dir }}"}}venv/"
+    virtualenv: "{{"{{ venv_dir }}"}}"
     virtualenv_python: /usr/bin/python3
 
 - name: create new "postactivate" file in virtual environment
   template:
     src: postactivate.j2
-    dest: "{{"{{ app_dir }}"}}venv/bin/postactivate"
+    dest: "{{"{{ venv_dir }}"}}bin/postactivate"
     mode: 0644
 
 - name: create .env config

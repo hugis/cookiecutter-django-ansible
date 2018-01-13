@@ -14,7 +14,7 @@ Nice=5
 TimeoutSec=600
 Restart=on-failure
 
-ExecStart={{ app_dir }}venv/bin/python {{ app_dir }}/venv/bin/celery beat \
+ExecStart={{ venv_dir }}bin/python {{ venv_dir }}bin/celery beat \
         -A {{ celery_task_app }} \
         -S django_celery_beat.schedulers:DatabaseScheduler \
         --schedule {{ app_dir }}celerybeat.beat \

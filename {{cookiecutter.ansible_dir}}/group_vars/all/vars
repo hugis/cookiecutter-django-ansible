@@ -1,6 +1,7 @@
 ---
 project_slug: {{cookiecutter.project_slug}}
 app_dir: {{cookiecutter.app_dir}}
+venv_dir: /opt/venv/{{cookiecutter.project.slug}}/
 db_name: {{cookiecutter.project_slug}}
 db_user: {{cookiecutter.project_slug}}
 db_host: 127.0.0.1

@@ -12,7 +12,7 @@ WorkingDirectory={{ app_dir }}
 EnvironmentFile={{ app_dir }}.env
 Restart=always
 
-ExecStart={{ app_dir }}venv/bin/python {{ app_dir }}venv/bin/gunicorn \
+ExecStart={{ venv_dir }}bin/python {{ venv_dir }}bin/gunicorn \
         --access-logfile - \
         --pid {{ app_dir }}pid \
         --bind unix:{{ socket_path }}{{ socket_file }} \
