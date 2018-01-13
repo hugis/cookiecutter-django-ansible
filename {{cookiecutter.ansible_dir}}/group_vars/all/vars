@@ -5,6 +5,7 @@ db_name: {{cookiecutter.project_slug}}
 db_user: {{cookiecutter.project_slug}}
 db_host: 127.0.0.1
 db_port: 5432
+web_root: /var/www/{{cookiecutter.l2_domain}}/
 django_allowed_host:
   - {{cookiecutter.l3_domain}}
 django_server_email: postmaster@{% if cookiecutter.use_mailgun == "y" %}mg.{% endif %}{{cookiecutter.l2_domain}}
