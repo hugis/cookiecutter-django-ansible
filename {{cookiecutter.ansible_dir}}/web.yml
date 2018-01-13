@@ -4,5 +4,3 @@
   become: true
   roles:
     - web
-
-# vim:ft=ansible:

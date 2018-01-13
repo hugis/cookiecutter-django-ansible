@@ -1,8 +1,8 @@
 [app]
-{{ cookiecutter.app_server }}
+{{ cookiecutter.app_server }}{% if cookiecutter.use_celery == "y" %}
 
 [celery]
-{{ cookiecutter.celery_server }}
+{{ cookiecutter.celery_server }}{% endif %}
 
 [db]
 {{ cookiecutter.db_server }}
