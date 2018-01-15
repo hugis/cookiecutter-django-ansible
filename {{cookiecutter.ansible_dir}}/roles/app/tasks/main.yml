@@ -27,6 +27,7 @@
     src: systemd.socket.j2
     dest: "{{"{{ app_dir }}"}}{{"{{ project_slug }}"}}.socket"
     mode: 0644
+  notify: restart systemd service
 
 - name: create symlink to socket unit file
   file:
@@ -35,12 +36,14 @@
     state: link
   become: true
   become_user: root
+  notify: restart systemd service
 
 - name: install systemd service unit file
   template:
     src: systemd.service.j2
     dest: "{{"{{ app_dir }}"}}{{"{{ project_slug }}"}}.service"
     mode: 0644
+  notify: restart systemd service
 
 - name: create symlink to service unit file
   file:
@@ -49,6 +52,7 @@
     state: link
   become: true
   become_user: root
+  notify: restart systemd service
 
 - name: start app service
   systemd: state=started name={{"{{ project_slug }}"}}.service daemon_reload=yes

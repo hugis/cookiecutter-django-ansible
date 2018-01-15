@@ -1,5 +1,14 @@
----
+{% raw %}---
 - name: reload monit
-  service: name=monit state=reloaded
+  service:
+    name: monit
+    state: reloaded
   become: true
   become_user: root
+
+- name: restart systemd service
+  service:
+    name: "{{ project_slug }}.service"
+    state: restarted
+  become: true
+  become_user: root{% endraw %}
