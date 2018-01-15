@@ -1,0 +1,10 @@
+{% raw %}---
+- name: restart celerybeat service
+  service:
+    name: "{{ project_slug }}_celerybeat.service"
+    state: restarted
+
+- name: restart celeryworker service
+  service:
+    name: "{{ project_slug }}_celeryworker.service"
+    state: restarted{% endraw %}

@@ -21,13 +21,14 @@
     mode: 0644
   become: true
   become_user: webmanager
+  notify: restart celerybeat service
 
 - name: create symlink to celerybeat service unit file
   file:
     src: "{{ app_dir }}{{ project_slug }}_celerybeat.service"
     dest: /etc/systemd/system/{{ project_slug }}_celerybeat.service
     state: link
-
+  notify: restart celerybeat service
 
 - name: install systemd celeryworker service unit file
   template:
@@ -36,9 +37,23 @@
     mode: 0644
   become: true
   become_user: webmanager
+  notify: restart celeryworker service
 
 - name: create symlink to celeryworker service unit file
   file:
     src: "{{ app_dir }}{{ project_slug }}_celeryworker.service"
     dest: /etc/systemd/system/{{ project_slug }}_celeryworker.service
-    state: link{% endraw %}
+    state: link
+  notify: restart celeryworker service
+
+- name: start systemd celerybeat service
+  systemd:
+    name: "{{ project_slug }}_celerybeat.service"
+    state: started
+    daemon_reload: yes
+
+- name: start systemd celeryworker service
+  systemd:
+    name: "{{ project_slug }}_celeryworker.service"
+    state: started
+    daemon_reload: yes{% endraw %}
