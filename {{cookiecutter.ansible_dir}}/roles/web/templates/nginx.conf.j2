@@ -5,13 +5,28 @@
 server {
 	listen {{ web_listen_ip }}:80;
 	server_name {{ l2_domain }};
-	return 301 http://{{ l3_domain }}$request_uri;
+	return 301 http{% endraw %}{% if cookiecutter.use_ssl == "y" %}s{% endif %}://{{"{{ l3_domain }}"}}$request_uri;
 }
 
 server {
-	listen {{ web_listen_ip }}:80;
-	server_name {{ django_allowed_host|join(" ") }};
-	root {{ web_root }};
+	listen {{"{{ web_listen_ip }}"}}:80;{% if cookiecutter.use_ssl == "y" %}
+	listen {{"{{ web_listen_ip }}"}}:443 ssl;{% endif %}
+	server_name {{"{{ django_allowed_host|join(" ") }}"}};
+	root {{"{{ web_root }}"}};{% if cookiecutter.use_ssl == "y" %}{% raw %}
+
+	ssl on;
+	ssl_certificate {{ ssl_certificate }};
+	ssl_certificate_key {{ ssl_certificate_key }};
+	ssl_session_cache shared:SSL:50m;
+	ssl_session_timeout 5m;
+
+	location ^~ /.well-known/ {
+		root {{ web_root }}letsencrypt/;
+	}
+
+	if ($host !~* ^{{ l3_domain }}$) {
+		return 444;
+	}{% endraw %}{% endif %}{% raw %}
 
 	{% if not media_absolute %}location {{ django_media_url }} {
 		expires 1M;
