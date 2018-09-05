@@ -23,7 +23,7 @@ server {
 server {
 	listen {{"{{ web_listen_ip }}"}}:80;{% if cookiecutter.use_ssl == "y" %}
 	listen {{"{{ web_listen_ip }}"}}:443 ssl;{% endif %}
-	server_name {{"{{ django_allowed_host|join(" ") }}"}};
+	server_name {{'{{ django_allowed_host|join(" ") }}'}};
 	root {{"{{ web_root }}"}};{% if cookiecutter.use_ssl == "y" %}{% raw %}
 
 	ssl on;
