@@ -6,7 +6,19 @@ server {
 	listen {{ web_listen_ip }}:80;
 	server_name {{ l2_domain }};
 	return 301 http{% endraw %}{% if cookiecutter.use_ssl == "y" %}s{% endif %}://{{"{{ l3_domain }}"}}$request_uri;
-}
+}{% if cookiecutter.use_ssl == "y" %}{% raw %}
+
+server {
+	listen {{ web_listen_ip }}:443 ssl;
+	server_name {{ l2_domain }};
+	return 301 https://{{ l3_domain }}$request_uri;
+
+	ssl on;
+	ssl_certificate {{ ssl_certificate }};
+	ssl_certificate_key {{ ssl_certificate_key }};
+	ssl_session_cache shared:SSL:50m;
+	ssl_session_timeout 5m;
+}{% endraw %}{% endif %}
 
 server {
 	listen {{"{{ web_listen_ip }}"}}:80;{% if cookiecutter.use_ssl == "y" %}
